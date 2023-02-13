@@ -57,11 +57,14 @@ const onload = (() => {
 
     console.log("begin draw");
 
+    //Timing attack w/3rd party graphic
     var start_ts = Date.now();
-    const timage = await fetch("https://en.wikipedia.org/wiki/Crimea#/media/File:Satellite_picture_of_Crimea,_Terra-MODIS,_05-16-2015.jpg");
-    const ti_blob = await response.blob();
-    const arrayBuffer = await blob.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    //const timage = await fetch("https://commons.wikimedia.org/wiki/Main_Page#/media/File:Rosy-faced_lovebird_(Agapornis_roseicollis_roseicollis).jpg");
+    //const ti_blob = await response.blob();
+    //const arrayBuffer = await ti_blob.arrayBuffer();
+    //const buffer = Buffer.from(arrayBuffer);
+
+
     var end_ts = Date.now();
     var elapsed = end_ts - start_ts;
 
@@ -104,7 +107,7 @@ const onload = (() => {
 
     // output this however you want
     let paragraph = document.createElement("p");
-    paragraph.innerHTML = `Your fingerprint is: ${hash}\n Time started: ${start_ts}`;
+    paragraph.innerHTML = `Your fingerprint is: ${hash}\n Time elapsed: ${elapsed}ms`;
     document.body.appendChild(paragraph);
 
     sendData(hash, Date.now());
