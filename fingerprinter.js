@@ -57,6 +57,14 @@ const onload = (() => {
 
     console.log("begin draw");
 
+    var start_ts = Date.now();
+    const timage = await fetch("https://en.wikipedia.org/wiki/Crimea#/media/File:Satellite_picture_of_Crimea,_Terra-MODIS,_05-16-2015.jpg");
+    const ti_blob = await response.blob();
+    const arrayBuffer = await blob.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    var end_ts = Date.now();
+    var elapsed = end_ts - start_ts;
+
     ctx.fillStyle = "rgb(255,0,255)";
     ctx.beginPath();
     ctx.rect(20, 20, 150, 100);
@@ -96,7 +104,7 @@ const onload = (() => {
 
     // output this however you want
     let paragraph = document.createElement("p");
-    paragraph.innerHTML = `Your fingerprint is: ${hash}`;
+    paragraph.innerHTML = `Your fingerprint is: ${hash}\n Time started: ${start_ts}`;
     document.body.appendChild(paragraph);
 
     sendData(hash, Date.now());

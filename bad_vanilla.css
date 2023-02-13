@@ -43,7 +43,7 @@ body {
     margin: 0 auto;
     max-width: 75ch;
     padding: 0 0.5rem;
-    background: url(winky.png);
+    /* background: url(winky.png) */
 }
 body, input {
     font: var(--desktop-font-size) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto, Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
