@@ -23,5 +23,13 @@
         <li>item 2</li>
         <li>item 3</li>
       </ul>
+      <script type="module">
+        console.log(performance.now());
+        setTimeout(() => {
+            document.querySelector("#target").setAttribute("href", "https://ec.europa.eu");
+            console.log(performance.now()); 
+        }, 2000);
+        
+    </script>
 </body>
 </html>

@@ -12,8 +12,14 @@ class CheckerboardPainter {
           ctx.fill();
         }
       }
+      updateCounter();
     }
   }
   
+let counter = 0;
+const updateCounter = () => {
+  counter++;
+  console.log(counter);
+}
   // Register our class under a specific name
   registerPaint('checkerboard', CheckerboardPainter);
