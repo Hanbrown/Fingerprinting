@@ -18,8 +18,11 @@ class CheckerboardPainter {
   
 let counter = 0;
 const updateCounter = () => {
-  counter++;
-  console.log(counter);
+  //setTimeout(() => {
+    counter++;
+    console.log(counter);
+  //}, 5000);
+  
 }
   // Register our class under a specific name
   registerPaint('checkerboard', CheckerboardPainter);
