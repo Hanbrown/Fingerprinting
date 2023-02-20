@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 // -- API request to save data to database. Ensure cross-origin requests are allowed
 app.options(["/store", "/photo"], (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'OPTIONS, POST');
+    res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     res.sendStatus(200);
 });
