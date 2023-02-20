@@ -123,6 +123,12 @@ app.post("/store", (req, res) => {
 
 // -- API Request to get a CC0 photo of a cat
 app.get("/photo", (req, res) => {
+    // Allow cross-origin requests
+    res.set({
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, GET"
+    });
+
     res.sendFile( __dirname + "/public/photo.jpg");
 });
 
