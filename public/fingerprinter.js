@@ -49,9 +49,27 @@ const sendData = async (canvasHash, currentDate /* TODO: Other data to come late
     .catch(error => console.error("ERROR: ", error));
 };
 
+// Toggle the fingerprint canvas
+let hidden = true;
+document.getElementById("toggle").onclick = ((e) => {
+    if (hidden) {
+        document.getElementById("theCanvas").classList.remove("hide");
+        document.getElementById("toggle").innerHTML = "Hide fingerprint";
+        hidden = false;
+    }
+    else {
+        document.getElementById("theCanvas").classList.add("hide");
+        document.getElementById("toggle").innerHTML = "Show fingerprint";
+        hidden = true;
+    }
+});
+
 const onload = (() => {
     const canvas = document.createElement("canvas");
-    //document.body.appendChild(canvas);
+    canvas.setAttribute("id", "theCanvas");
+    canvas.classList.add("hide");
+    document.body.appendChild(canvas);
+    
 
     var ctx = canvas.getContext("2d");
 
@@ -98,6 +116,8 @@ const onload = (() => {
     let paragraph = document.createElement("p");
     paragraph.innerHTML = `Your fingerprint is: ${hash}`;
     document.body.appendChild(paragraph);
+
+
 
     sendData(hash, Date.now());
 })();

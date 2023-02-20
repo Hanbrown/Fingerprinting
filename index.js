@@ -1,3 +1,4 @@
+//testing
 require('dotenv').config() // For .env file
 
 const express = require ("express");
@@ -30,14 +31,14 @@ app.get("/", (req, res) => {
 });
 
 // -- API request to save data to database. Ensure cross-origin requests are allowed
-app.options("/store", (req, res) => {
+app.options(["/store", "/photo"], (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'OPTIONS, POST');
+    res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     res.sendStatus(200);
 });
 
-app.post("/store", /*cors(),*/ (req, res) => {
+app.post("/store", (req, res) => {
     
     // Allow cross-origin requests
     res.set({
@@ -120,7 +121,16 @@ app.post("/store", /*cors(),*/ (req, res) => {
     }
 });
 
+// -- API Request to get a CC0 photo of a cat
+app.get("/photo", (req, res) => {
+    // Allow cross-origin requests
+    res.set({
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, GET"
+    });
 
+    res.sendFile( __dirname + "/public/photo.jpg");
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
