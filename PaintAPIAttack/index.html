@@ -6,11 +6,13 @@
         CSS.paintWorklet.addModule('checkerboard.js');
     </script>
     <style>
+        /* unvisited link */
+
         #target {background-image: paint(checkerboard);}
     </style>
 </head>
 <body>
-    <a id="target" href="https://google.com">Click here</a>
+    <a id="target" href="https://dummy.com">Click here</a>
     <ul>
         <li>item 1</li>
         <li>item 2</li>
@@ -18,13 +20,13 @@
       </ul>
       <script type="module">
         console.log(performance.now());
-        console.log(document.querySelector("#target").getAttribute("visited"));
-
+       
         setTimeout(() => {
             document.querySelector("#target").setAttribute("href", "https://ec.europa.eu");
             console.log(performance.now()); 
-            console.log(document.querySelector("#target").getAttribute("visited"));
         }, 5000);
+        
+        
         
     </script>
 </body>
