@@ -13,6 +13,10 @@ class CheckerboardPainter {
         }
       }
       updateCounter();
+      //performance.now();
+      //sleep();
+
+      //setTimeout(() => {console.log("timeout");}, 50);
     }
   }
   
