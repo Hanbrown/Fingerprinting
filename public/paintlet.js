@@ -1,5 +1,11 @@
 class CheckerboardPainter {
+
     paint(ctx, geom, properties) {
+      try {
+        registerPaint('myPainterIdentifier', CheckerboardPainter);
+      } catch (error) {
+      }
+
       // Use `ctx` as if it was a normal canvas
       const colors = ['yellow', 'orange', 'blue'];
       const size = 32;
@@ -12,21 +18,9 @@ class CheckerboardPainter {
           ctx.fill();
         }
       }
-      updateCounter();
-      //performance.now();
-      //sleep();
-
-      //setTimeout(() => {console.log("timeout");}, 50);
     }
   }
   
-let counter = 0;
-const updateCounter = () => {
-  //setTimeout(() => {
-    counter++;
-    console.log(counter);
-  //}, 5000);
-  
-}
+ 
   // Register our class under a specific name
   registerPaint('checkerboard', CheckerboardPainter);
