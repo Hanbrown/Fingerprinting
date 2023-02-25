@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <script>
+        CSS.paintWorklet.addModule('paintlet.js');
+    </script>
+    <style>
+        /* unvisited link */   
+        #target {background-image: paint(checkerboard);}
+        #target1 {background-image: paint(checkerboard);}
+        #target2 {background-image: paint(checkerboard);}
+        #target3 {background-image: paint(checkerboard);}
+
+        #weirdElement { 
+            display: inline; 
+        }
+        #weirdElement::after {
+            content: paint(myPainterIdentifier);
+        }
+       
+    </style>
+</head>
+<body>
+    <a id="target" href="https://dummy.com">Click here</a>
+    <a id="target1" href="https://dummy.com">Click here</a>
+    <a id="target2" href="https://dummy.com">Click here</a>
+    <a id="target3" href="https://dummy.com">Click here</a>
+
+
+    <div id="weirdElement">&nbsp;</div>
+      <script type="module">
+        function switchToTestLink(t) {
+            setTimeout(() => {
+                document.querySelector("#target"+t).setAttribute("href", "https://ec.europa.eu");
+                    setTimeout(() => {
+                        let currWidth = document.querySelector("#weirdElement").getBoundingClientRect().width;
+                        console.log(currWidth);
+                        if (currWidth != origWidth) {
+                            if (!visited) {
+                                visited = true;
+                                console.log("VISITED");
+                                alert("User has visited https://ec.europa.eu");
+                            }
+                        } 
+                    }, 500);
+            }, 500);
+        }
+
+        let origWidth = document.querySelector("#weirdElement").getBoundingClientRect().width;
+        console.log(origWidth);
+
+        var visited = false;
+        switchToTestLink("");
+        setTimeout(() => {
+            switchToTestLink("1");
+            }, 500);
+        setTimeout(() => {
+            switchToTestLink("2");
+        }, 4000);
+        setTimeout(() => {
+            switchToTestLink("3");
+        }, 10000);
+        
+    </script>
+</body>
+</html>
