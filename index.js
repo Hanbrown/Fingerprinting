@@ -10,7 +10,6 @@ const port = 8080;
 // Use JSON in requests and use public directory to serve files
 app.use(express.static(__dirname + "/public"));
 app.use(express.json()); // super important line
-app.use(express.text());
 
 // Mongo
 const Analytics = require("./analytics");
@@ -48,11 +47,10 @@ app.post("/store", (req, res) => {
     });
 
     // If data was sent in the request body, do stuff
-    const theBody = JSON.parse(req.body);
-    if (theBody.data) {
+    if (req.body.data) {
         // Store hash and date in variables for easy access
-        const theCanvasHash = theBody.data.canvas;
-        const currentDate = theBody.data.date;
+        const theCanvasHash = req.body.data.canvas;
+        const currentDate = req.body.data.date;
         const originSite = req.headers.origin;
 
         // Create a new DB entry
