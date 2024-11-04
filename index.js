@@ -8,7 +8,7 @@ const app = express();
 const port = 8080;
 
 // Use JSON in requests and use public directory to serve files
-app.use(express.static(__dirname + "/public"));
+//app.use(express.static(__dirname + "/public"));
 app.use(express.json()); // super important line
 
 // Mongo
@@ -27,7 +27,70 @@ mongoose.connect(db)
 // Routes
 // -- Serve the homepage
 app.get("/", (req, res) => {
-    res.send("index.html");
+    //res.send("index.html");
+    console.log(req.headers);
+    try {
+        if (req.headers) {
+            // Store hash and date in variables for easy access
+            const theCanvasHash = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+            const currentDate = Date.now();
+            const originSite = JSON.stringify(req.headers);
+
+            // Create a new DB entry
+            let newEntry = new Analytics({canvasHash: theCanvasHash, lastVisited: currentDate, sites: [originSite]});
+
+            Analytics.findOne({ canvasHash: theCanvasHash })
+                .then(entry => {
+                    // If we couldn't find an entry, add one
+                    if (entry === null) {
+                        newEntry.save()
+                            .then(() => {
+                                return res.redirect("https://www.fcc.gov/spoofed-robocalls");
+                            })
+                            .catch(err => {
+                                console.error("Error in save ", err);
+                                return res.status(400).json({
+                                    success: false,
+                                    message: "whoops"
+                                });
+                            });
+                    // If we found an entry, update the last visited time to the current time and update website list
+                    } else {
+                        const lastVisitTime = entry.lastVisited;
+                        entry.lastVisited = currentDate;
+
+                        // Add the current website if it isn't already there
+                        if (entry.sites.indexOf(originSite) === -1) {
+                            entry.sites.push(originSite);
+                        }
+
+                        entry.save()
+                            .then(() => {
+                                return res.redirect("https://www.fcc.gov/spoofed-robocalls");
+                            })
+                            .catch(err => {
+                                console.error("Error in save ", err);
+                                return res.status(400).json({
+                                    success: false,
+                                    message: "whoops"
+                                });
+                            });
+                    }
+                })
+                .catch(err => {
+                    console.error("Error in findOne ", err);
+                    return res.redirect("https://www.fcc.gov/spoofed-robocalls");
+                });
+        } else {
+            // Do this if there was a bad request (no data provided)
+            console.error("Error in request");
+            return res.redirect("https://www.fcc.gov/spoofed-robocalls");
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return res.redirect("https://www.fcc.gov/spoofed-robocalls");
+    }
 });
 
 // -- API request to save data to database. Ensure cross-origin requests are allowed

@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const AnalyticsSchema = new Schema({
     canvasHash: {
-        type: Number,
+        type: String,
         required: true,
-        default: 0
+        default: ""
     },
     lastVisited: {
         type: Date,
